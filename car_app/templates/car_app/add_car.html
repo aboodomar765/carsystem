@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}إضافة سيارة جديدة - نظام إدارة السيارات{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="mb-3">إضافة سيارة جديدة</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="id_name">اسم السيارة:</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+                <div class="errorlist">{{ form.name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_car_type">نوع السيارة:</label>
+            {{ form.car_type }}
+            {% if form.car_type.errors %}
+                <div class="errorlist">{{ form.car_type.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_year">سنة الصنع:</label>
+            {{ form.year }}
+            {% if form.year.errors %}
+                <div class="errorlist">{{ form.year.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_chassis_number">رقم الشاصي:</label>
+            {{ form.chassis_number }}
+            {% if form.chassis_number.errors %}
+                <div class="errorlist">{{ form.chassis_number.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_purchase_date">تاريخ الشراء:</label>
+            {{ form.purchase_date }}
+            {% if form.purchase_date.errors %}
+                <div class="errorlist">{{ form.purchase_date.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_purchase_value">قيمة الشراء:</label>
+            {{ form.purchase_value }}
+            {% if form.purchase_value.errors %}
+                <div class="errorlist">{{ form.purchase_value.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_clearance_type">التخليص:</label>
+            {{ form.clearance_type }}
+            {% if form.clearance_type.errors %}
+                <div class="errorlist">{{ form.clearance_type.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="d-flex gap-1">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">💾 حفظ</button>
+            <a href="{% url 'car_list' %}" class="btn btn-warning" style="flex: 1;">❌ إلغاء</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

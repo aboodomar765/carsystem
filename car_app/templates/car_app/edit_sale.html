@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}تعديل البيع - نظام إدارة السيارات{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="mb-3">تعديل بيانات البيع</h2>
+    
+    <div class="card mb-3">
+        <h3>معلومات السيارة</h3>
+        <p><strong>النوع:</strong> {{ sale.car.get_car_type_display }}</p>
+        <p><strong>سنة الصنع:</strong> {{ sale.car.year }}</p>
+        <p><strong>رقم الشاصي:</strong> {{ sale.car.chassis_number }}</p>
+        <p><strong>قيمة الشراء:</strong> {{ sale.car.purchase_value|floatformat:2 }}</p>
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_sale_date">تاريخ البيع:</label>
+            {{ form.sale_date }}
+            {% if form.sale_date.errors %}
+                <div class="errorlist">{{ form.sale_date.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_sale_value">قيمة البيع:</label>
+            {{ form.sale_value }}
+            {% if form.sale_value.errors %}
+                <div class="errorlist">{{ form.sale_value.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_partial_profit">الربح الجزئي:</label>
+            {{ form.partial_profit }}
+            {% if form.partial_profit.errors %}
+                <div class="errorlist">{{ form.partial_profit.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="d-flex gap-1">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">💾 حفظ التعديلات</button>
+            <a href="{% url 'sales_list' %}" class="btn btn-warning" style="flex: 1;">❌ إلغاء</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

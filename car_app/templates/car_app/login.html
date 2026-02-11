@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}تسجيل الدخول - نظام إدارة السيارات{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-container">
+        <div class="auth-header">
+            <div class="auth-icon">
+                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25 5C32.732 5 39 11.268 39 19C39 26.732 32.732 33 25 33C17.268 33 11 26.732 11 19C11 11.268 17.268 5 25 5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M15 35C15 34 20 33 25 33C30 33 35 34 35 35M15 35V38C15 40.209 19.03 42 25 42C30.97 42 35 40.209 35 38V35M15 35H35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h1>نظام إدارة السيارات</h1>
+            <p class="subtitle">ادارة حساب السيارات </p>
+        </div>
+
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>خطأ في تسجيل الدخول:</strong>
+                {% for error in form.non_field_errors %}
+                <div>{{ error }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="id_username" class="form-label">اسم المستخدم</label>
+                <div class="input-wrapper" style="width: 100%;">
+                    <svg class="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 10C12.209 10 14 8.209 14 6C14 3.791 12.209 2 10 2C7.791 2 6 3.791 6 6C6 8.209 7.791 10 10 10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 18C3 15.791 6.134 14 10 14C13.866 14 17 15.791 17 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{ form.username }}
+                </div>
+                {% if form.username.errors %}
+                <small class="error-text">{{ form.username.errors.0 }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_password" class="form-label">كلمة المرور</label>
+                <div class="input-wrapper">
+                    <svg class="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 10C3 7.791 3 6.5 4.5 5.5C5 5 6 5 8 5H12C14 5 15 5 15.5 5.5C17 6.5 17 7.791 17 10C17 12.209 17 13.5 15.5 14.5C15 15 14 15 12 15H8C6 15 5 15 4.5 14.5C3 13.5 3 12.209 3 10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7 10H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{ form.password }}
+                </div>
+                {% if form.password.errors %}
+                <small class="error-text">{{ form.password.errors.0 }}</small>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn-login">تسجيل الدخول</button>
+        </form>
+
+        
+    </div>
+</div>
+{% endblock %}

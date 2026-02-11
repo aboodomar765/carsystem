@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>قائمة السيارات</title>
+    <style>
+        @page {
+            margin: 10mm;
+            size: A4;
+        }
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            font-size: 10px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 10px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 16px;
+            color: #2c3e50;
+        }
+        .date {
+            font-size: 9px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        thead {
+            background-color: #2c3e50;
+            color: white;
+        }
+        th {
+            padding: 6px;
+            border: 1px solid #bdc3c7;
+            text-align: center;
+            font-weight: bold;
+            font-size: 9px;
+        }
+        td {
+            padding: 5px;
+            border: 1px solid #bdc3c7;
+            text-align: center;
+            font-size: 9px;
+        }
+        tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        tbody tr:nth-child(even) {
+            background-color: white;
+        }
+        .badge {
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 8px;
+            font-weight: bold;
+            color: white;
+            display: inline-block;
+        }
+        .badge-sold {
+            background-color: #27ae60;
+        }
+        .badge-available {
+            background-color: #f39c12;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>قائمة السيارات</h1>
+        <p class="date">تاريخ الطباعة: {% now "d/m/Y" %}</p>
+    </div>
+    
+    <form method="get" class="filter-form" style="text-align:center;margin-bottom:10px">
+        <label style="margin-right:8px">الشهر:
+            <select name="month">
+                <option value="">كل الأشهر</option>
+                <option value="1">1 - يناير</option>
+                <option value="2">2 - فبراير</option>
+                <option value="3">3 - مارس</option>
+                <option value="4">4 - أبريل</option>
+                <option value="5">5 - مايو</option>
+                <option value="6">6 - يونيو</option>
+                <option value="7">7 - يوليو</option>
+                <option value="8">8 - أغسطس</option>
+                <option value="9">9 - سبتمبر</option>
+                <option value="10">10 - أكتوبر</option>
+                <option value="11">11 - نوفمبر</option>
+                <option value="12">12 - ديسمبر</option>
+            </select>
+        </label>
+        <label style="margin-right:8px">السنة:
+            <input type="number" name="year" min="1900" max="2100" style="width:80px" placeholder="YYYY" />
+        </label>
+        <button type="submit">بحث</button>
+        <a href="" style="margin-left:8px; text-decoration:none; color:#2c3e50;">مسح</a>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>الاسم</th>
+                <th>النوع</th>
+                <th>السنة</th>
+                <th>الشاصي</th>
+                <th>تاريخ الشراء</th>
+                <th>القيمة</th>
+                <th>التخليص</th>
+                <th>الحالة</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for car in cars %}
+            <tr>
+                <td>{{ car.name }}</td>
+                <td>{{ car.get_car_type_display }}</td>
+                <td>{{ car.year }}</td>
+                <td>{{ car.chassis_number }}</td>
+                <td>{{ car.purchase_date|date:"d/m/Y" }}</td>
+                <td>{{ car.purchase_value }}</td>
+                <td>
+                    {% if car.clearance_type == 'purchase' %}
+                        شراء
+                    {% else %}
+                        اعلان
+                    {% endif %}
+                </td>
+                <td>
+                    {% if car.status == 'sold' %}
+                        <span class="badge badge-sold">مباع</span>
+                    {% else %}
+                        <span class="badge badge-available">متاح</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

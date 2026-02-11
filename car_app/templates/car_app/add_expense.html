@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}إضافة مصروف - نظام إدارة السيارات{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="mb-3">إضافة مصروف جديد</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_description">الوصف:</label>
+            {{ form.description }}
+            {% if form.description.errors %}
+                <div class="errorlist">{{ form.description.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_amount">القيمة:</label>
+            {{ form.amount }}
+            {% if form.amount.errors %}
+                <div class="errorlist">{{ form.amount.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_date">التاريخ:</label>
+            {{ form.date }}
+            {% if form.date.errors %}
+                <div class="errorlist">{{ form.date.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="d-flex gap-1">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">💾 حفظ</button>
+            <a href="{% url 'expenses_list' %}" class="btn btn-warning" style="flex: 1;">❌ إلغاء</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

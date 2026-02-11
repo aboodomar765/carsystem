@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}تعديل السيارة - نظام إدارة السيارات{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="mb-3">تعديل بيانات السيارة</h2>
+    
+    <div class="card mb-3">
+        <p><strong>اسم السيارة:</strong> {{ car.name }}</p>
+        <p><strong>رقم الشاصي:</strong> {{ car.chassis_number }}</p>
+        <p><strong>الحالة:</strong> 
+            {% if car.status == 'sold' %}
+                <span class="badge badge-success">✓ مباع</span>
+            {% else %}
+                <span class="badge badge-warning">متاح</span>
+            {% endif %}
+        </p>
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="id_name">اسم السيارة:</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+                <div class="errorlist">{{ form.name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_car_type">نوع السيارة:</label>
+            {{ form.car_type }}
+            {% if form.car_type.errors %}
+                <div class="errorlist">{{ form.car_type.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_year">سنة الصنع:</label>
+            {{ form.year }}
+            {% if form.year.errors %}
+                <div class="errorlist">{{ form.year.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_purchase_date">تاريخ الشراء:</label>
+            {{ form.purchase_date }}
+            {% if form.purchase_date.errors %}
+                <div class="errorlist">{{ form.purchase_date.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_purchase_value">قيمة الشراء:</label>
+            {{ form.purchase_value }}
+            {% if form.purchase_value.errors %}
+                <div class="errorlist">{{ form.purchase_value.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_clearance_type">التخليص:</label>
+            {{ form.clearance_type }}
+            {% if form.clearance_type.errors %}
+                <div class="errorlist">{{ form.clearance_type.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="d-flex gap-1">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">💾 حفظ التعديلات</button>
+            <a href="{% url 'car_list' %}" class="btn btn-warning" style="flex: 1;">❌ إلغاء</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

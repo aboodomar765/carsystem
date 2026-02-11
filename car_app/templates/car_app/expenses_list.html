@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}المصروفات - نظام إدارة السيارات{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-between align-center mb-3">
+    <h1>المصروفات الشهرية</h1>
+    <a href="{% url 'add_expense' %}" class="btn btn-primary">➕ إضافة مصروف جديد</a>
+</div>
+
+<!-- Expenses Table -->
+<div class="table-container">
+    {% if expenses %}
+    <table>
+        <thead>
+            <tr>
+                <th>الوصف</th>
+                <th>القيمة</th>
+                <th>التاريخ</th>
+                <th>العمليات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.description }}</td>
+                <td>{{ expense.amount|floatformat:2 }}</td>
+                <td>{{ expense.date|date:"d/m/Y" }}</td>
+                <td>
+                    <form method="post" action="{% url 'delete_expense' expense.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-small" onclick="return confirm('هل أنت متأكد؟')">🗑️ حذف</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="card mt-3">
+        <h3>إجمالي المصروفات: <span style="color: var(--danger-color);">{{ total_expenses|default:0|floatformat:2 }}</span></h3>
+    </div>
+    {% else %}
+    <p class="text-center">لا توجد مصروفات مسجلة حتى الآن.</p>
+    {% endif %}
+</div>
+{% endblock %}

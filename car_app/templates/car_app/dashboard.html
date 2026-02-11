@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}لوحة التحكم - نظام إدارة السيارات{% endblock %}
+
+{% block content %}
+<h1 class="mb-3">لوحة التحكم</h1>
+
+<!-- Date Filter -->
+<div class="card mb-3">
+    <form method="get" class="d-flex gap-1 align-center">
+        <div style="flex: 1;">
+            <input type="date" name="start_date" id="startDate" value="{{ start_date }}" class="form-control" placeholder="من تاريخ">
+        </div>
+        <div style="flex: 1;">
+            <input type="date" name="end_date" id="endDate" value="{{ end_date }}" class="form-control" placeholder="إلى تاريخ">
+        </div>
+        <button type="submit" class="btn btn-primary">فلترة</button>
+        <a href="{% url 'dashboard' %}" class="btn btn-warning">مسح</a>
+    </form>
+</div>
+
+<!-- Dashboard Cards -->
+<div class="dashboard-grid">
+    <div class="card">
+        <div class="card-title">إجمالي السيارات</div>
+        <div class="card-value">{{ total_cars }}</div>
+    </div>
+    
+    <div class="card success">
+        <div class="card-title">السيارات المباعة</div>
+        <div class="card-value">{{ sold_cars }}</div>
+    </div>
+    
+    <div class="card warning">
+        <div class="card-title">السيارات المتاحة</div>
+        <div class="card-value">{{ available_cars }}</div>
+    </div>
+</div>
+
+<!-- Financial Summary -->
+<div class="dashboard-grid">
+    <div class="card success">
+        <div class="card-title">مجموع الأرباح الجزئية</div>
+        <div class="card-value">{{ total_partial_profit|floatformat:2 }}</div>
+    </div>
+    
+    <div class="card danger">
+        <div class="card-title">مجموع المصروفات</div>
+        <div class="card-value">{{ total_expenses|floatformat:2 }}</div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">صافي الأرباح</div>
+        <div class="card-value">{{ net_profit|floatformat:2 }}</div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="card mb-3 mt-3">
+    <h3 class="mb-2">العمليات السريعة</h3>
+    <div class="d-flex gap-1" style="flex-wrap: wrap;">
+        <a href="{% url 'add_car' %}" class="btn btn-primary">➕ إضافة سيارة جديدة</a>
+        <a href="{% url 'car_list' %}" class="btn btn-secondary">📋 عرض السيارات</a>
+        <a href="{% url 'sales_list' %}" class="btn btn-success">💰 عرض المبيعات</a>
+        <a href="{% url 'add_expense' %}" class="btn btn-warning">➕ إضافة مصروف</a>
+    </div>
+</div>
+{% endblock %}

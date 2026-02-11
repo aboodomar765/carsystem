@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}المبيعات - نظام إدارة السيارات{% endblock %}
+
+{% block content %}
+<h1 class="mb-3">صفحة المبيعات</h1>
+
+<!-- Date Filter -->
+<div class="table-container mb-3">
+    <form method="get" class="search-filter" style="display:flex;gap:0.5rem;align-items:center;">
+        <label for="start_date">من:</label>
+        <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}">
+        <label for="end_date">إلى:</label>
+        <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}">
+        <button type="submit" class="btn btn-primary">تصفية</button>
+        <a href="{% url 'sales_list' %}" class="btn btn-warning">مسح</a>
+    </form>
+</div>
+
+<!-- Sales Table -->
+<div class="table-container">
+    {% if sales %}
+    <table>
+        <thead>
+            <tr>
+                <th>نوع السيارة</th>
+                <th>سنة الصنع</th>
+                <th>رقم الشاصي</th>
+                <th>تاريخ الشراء</th>
+                <th>قيمة الشراء</th>
+                <th>التخليص</th>
+                <th>تاريخ البيع</th>
+                <th>قيمة البيع</th>
+                <th>الربح الكلي</th>
+                <th>الربح الجزئي</th>
+                <th>العمليات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in sales %}
+            <tr>
+                <td>{{ sale.car.get_car_type_display }}</td>
+                <td>{{ sale.car.year }}</td>
+                <td>{{ sale.car.chassis_number }}</td>
+                <td>{{ sale.car.purchase_date|date:"d/m/Y" }}</td>
+                <td>{{ sale.car.purchase_value|floatformat:2 }}</td>
+                <td>{{ sale.car.get_clearance_type_display }}</td>
+                <td>{{ sale.sale_date|date:"d/m/Y" }}</td>
+                <td>{{ sale.sale_value|floatformat:2 }}</td>
+                <td>
+                    {% if sale.get_total_profit > 0 %}
+                        <span style="color: green;">+{{ sale.get_total_profit|floatformat:2 }}</span>
+                    {% else %}
+                        <span style="color: red;">{{ sale.get_total_profit|floatformat:2 }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if sale.partial_profit > 0 %}
+                        <span style="color: green;">+{{ sale.partial_profit|floatformat:2 }}</span>
+                    {% else %}
+                        <span style="color: red;">{{ sale.partial_profit|floatformat:2 }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'edit_sale' sale.id %}" class="btn btn-primary btn-small">✏️ تعديل</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-center">لا توجد مبيعات مسجلة حتى الآن.</p>
+    {% endif %}
+</div>
+{% endblock %}
