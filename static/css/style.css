@@ -25,43 +25,82 @@ body {
 }
 
 /* Navbar */
-nav {
+.navbar {
     background-color: var(--primary-color);
     padding: 1rem 0;
     box-shadow: var(--shadow);
     margin-bottom: 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-nav .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.navbar .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
 }
 
-nav .logo {
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
     color: white;
     font-size: 1.5rem;
     font-weight: bold;
 }
 
-nav ul {
+.nav-menu {
     list-style: none;
     display: flex;
     gap: 2rem;
 }
 
-nav a {
+.navbar a {
     color: white;
     text-decoration: none;
     font-size: 0.95rem;
     transition: color 0.3s;
+    display: block;
+    padding: 0.5rem 0;
 }
 
-nav a:hover {
+.navbar a:hover {
     color: var(--secondary-color);
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+    transition: 0.3s;
+    display: block;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
 }
 
 /* Container */
@@ -264,6 +303,16 @@ label {
     gap: 1rem;
     margin-bottom: 1.5rem;
     flex-wrap: wrap;
+    align-items: center;
+}
+
+.search-filter label {
+    margin: 0;
+    display: inline-block;
+    min-width: auto;
+    font-weight: 500;
+    color: var(--text-dark);
+    padding: 0.75rem 0;
 }
 
 .search-filter input,
@@ -277,6 +326,10 @@ label {
 .search-filter input {
     flex: 1;
     min-width: 200px;
+}
+
+#yearFilter {
+    min-width: 90px;
 }
 
 /* Login/Register */
@@ -464,8 +517,43 @@ label {
 
 /* Responsive */
 @media (max-width: 768px) {
-    nav ul {
-        gap: 1rem;
+    .hamburger {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: absolute;
+        left: 0;
+        top: 100%;
+        flex-direction: column;
+        background-color: var(--primary-color);
+        width: 100%;
+        text-align: right;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding: 0;
+        margin: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav-menu.active {
+        max-height: 500px;
+        padding: 1rem;
+    }
+    
+    .nav-menu li {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0.75rem 0;
+    }
+    
+    .nav-menu li:last-child {
+        border-bottom: none;
+    }
+    
+    .navbar .container {
+        padding: 0 1rem;
     }
     
     .dashboard-grid {
@@ -474,23 +562,139 @@ label {
     
     .search-filter {
         flex-direction: column;
+        gap: 0.5rem;
     }
     
     .search-filter input,
-    .search-filter select {
+    .search-filter select,
+    .search-filter button,
+    .search-filter a {
         width: 100%;
+        min-width: auto;
+    }
+    
+    #yearFilter {
+        min-width: auto;
+    }
+    
+    /* Table scrolling on mobile */
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     table {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+        min-width: 600px;
     }
     
     th, td {
-        padding: 0.75rem 0.5rem;
+        padding: 0.5rem 0.25rem;
     }
     
     .btn-group {
         flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        width: 100%;
+    }
+    
+    .btn-group .btn {
+        width: auto;
+    }
+    
+    .card {
+        padding: 1rem;
+    }
+    
+    .card-value {
+        font-size: 1.5rem;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    .form-container {
+        max-width: 100%;
+        padding: 1rem;
+    }
+    
+    .d-flex {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .gap-1 {
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+    
+    .navbar .logo {
+        font-size: 1.2rem;
+    }
+    
+    h1 {
+        font-size: 1.3rem;
+    }
+    
+    .dashboard-grid {
+        gap: 1rem;
+    }
+    
+    .card {
+        padding: 0.75rem;
+    }
+    
+    .card-title {
+        font-size: 0.75rem;
+    }
+    
+    .card-value {
+        font-size: 1.2rem;
+    }
+    
+    .btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+    }
+    
+    table {
+        font-size: 0.7rem;
+    }
+    
+    th, td {
+        padding: 0.4rem 0.2rem;
+    }
+    
+    .form-control {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .auth-header {
+        padding: 2rem 1rem 1.5rem;
+    }
+    
+    .auth-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .auth-form {
+        padding: 1.5rem 1rem;
+    }
+    
+    .auth-container {
+        border-radius: 8px;
     }
 }
 
@@ -504,10 +708,19 @@ label {
 .mt-3 { margin-top: 1.5rem; }
 
 .text-center { text-align: center; }
-.text-right { text-align: left; }
-.text-left { text-align: right; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
 
 .d-flex { display: flex; }
 .justify-between { justify-content: space-between; }
 .align-center { align-items: center; }
 .gap-1 { gap: 1rem; }
+
+.btn-secondary {
+    background-color: var(--text-light);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #6c7a89;
+}

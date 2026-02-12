@@ -17,6 +17,21 @@ class CarForm(forms.ModelForm):
             'purchase_value': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
             'clearance_type': forms.Select(attrs={'class': 'form-control'}),
         }
+    
+    def clean_chassis_number(self):
+        """التحقق من أن رقم الشاصي فريد (ما عدا السيارة الحالية عند التعديل)"""
+        chassis_number = self.cleaned_data.get('chassis_number')
+        if chassis_number:
+            # إذا كنا نعدل سيارة موجودة
+            if self.instance.pk:
+                # ابحث عن السيارات الأخرى بنفس رقم الشاصي
+                if Car.objects.filter(chassis_number=chassis_number).exclude(pk=self.instance.pk).exists():
+                    raise forms.ValidationError('رقم الشاصي موجود بالفعل في النظام!')
+            else:
+                # إذا كنا ننشئ سيارة جديدة
+                if Car.objects.filter(chassis_number=chassis_number).exists():
+                    raise forms.ValidationError('رقم الشاصي موجود بالفعل في النظام!')
+        return chassis_number
 
 
 class SaleForm(forms.ModelForm):

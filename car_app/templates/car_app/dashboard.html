@@ -7,11 +7,11 @@
 
 <!-- Date Filter -->
 <div class="card mb-3">
-    <form method="get" class="d-flex gap-1 align-center">
-        <div style="flex: 1;">
+    <form method="get" class="d-flex gap-1 align-center" style="flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 160px;">
             <input type="date" name="start_date" id="startDate" value="{{ start_date }}" class="form-control" placeholder="من تاريخ">
         </div>
-        <div style="flex: 1;">
+        <div style="flex: 1; min-width: 160px;">
             <input type="date" name="end_date" id="endDate" value="{{ end_date }}" class="form-control" placeholder="إلى تاريخ">
         </div>
         <button type="submit" class="btn btn-primary">فلترة</button>
@@ -59,10 +59,10 @@
 <div class="card mb-3 mt-3">
     <h3 class="mb-2">العمليات السريعة</h3>
     <div class="d-flex gap-1" style="flex-wrap: wrap;">
-        <a href="{% url 'add_car' %}" class="btn btn-primary">➕ إضافة سيارة جديدة</a>
-        <a href="{% url 'car_list' %}" class="btn btn-secondary">📋 عرض السيارات</a>
-        <a href="{% url 'sales_list' %}" class="btn btn-success">💰 عرض المبيعات</a>
-        <a href="{% url 'add_expense' %}" class="btn btn-warning">➕ إضافة مصروف</a>
+        <a href="{% url 'add_car' %}" class="btn btn-primary" style="flex: 1; min-width: 150px;">➕ إضافة سيارة جديدة</a>
+        <a href="{% url 'car_list' %}" class="btn btn-secondary" style="flex: 1; min-width: 150px;">📋 عرض السيارات</a>
+        <a href="{% url 'sales_list' %}" class="btn btn-success" style="flex: 1; min-width: 150px;">💰 عرض المبيعات</a>
+        <a href="{% url 'add_expense' %}" class="btn btn-warning" style="flex: 1; min-width: 150px;">➕ إضافة مصروف</a>
     </div>
 </div>
 {% endblock %}

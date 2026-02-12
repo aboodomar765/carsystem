@@ -21,6 +21,8 @@ urlpatterns = [
     
     # Sales URLs
     path('sales/', views.sales_list, name='sales_list'),
+    path('sales/export/pdf/', views.export_sales_pdf, name='export_sales_pdf'),
+    path('sales/export/excel/', views.export_sales_excel, name='export_sales_excel'),
     path('sales/<int:sale_id>/edit/', views.edit_sale, name='edit_sale'),
     
     # Expenses URLs

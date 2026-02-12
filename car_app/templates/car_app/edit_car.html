@@ -46,6 +46,14 @@
         </div>
         
         <div class="form-group">
+            <label for="id_chassis_number">رقم الشاصي:</label>
+            {{ form.chassis_number }}
+            {% if form.chassis_number.errors %}
+                <div class="errorlist">{{ form.chassis_number.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
             <label for="id_purchase_date">تاريخ الشراء:</label>
             {{ form.purchase_date }}
             {% if form.purchase_date.errors %}

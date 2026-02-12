@@ -9,10 +9,17 @@
 </head>
 <body>
     {% if user.is_authenticated %}
-    <nav>
+    <nav class="navbar">
         <div class="container">
-            <div class="logo">🚗 نظام إدارة السيارات</div>
-            <ul>
+            <div class="nav-wrapper">
+                <div class="logo">🚗 نظام إدارة السيارات</div>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="{% url 'dashboard' %}">لوحة التحكم</a></li>
                 <li><a href="{% url 'car_list' %}">السيارات</a></li>
                 <li><a href="{% url 'sales_list' %}">المبيعات</a></li>

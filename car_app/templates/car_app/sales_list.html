@@ -3,14 +3,20 @@
 {% block title %}المبيعات - نظام إدارة السيارات{% endblock %}
 
 {% block content %}
-<h1 class="mb-3">صفحة المبيعات</h1>
+<div class="d-flex justify-between align-center mb-3" style="flex-wrap: wrap; gap: 1rem;">
+    <h1>صفحة المبيعات</h1>
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <a href="{% url 'export_sales_pdf' %}" class="btn btn-info" title="تصدير إلى PDF">📄 تصدير PDF</a>
+        <a href="{% url 'export_sales_excel' %}" class="btn btn-success" title="تصدير إلى Excel">📊 تصدير Excel</a>
+    </div>
+</div>
 
 <!-- Date Filter -->
 <div class="table-container mb-3">
-    <form method="get" class="search-filter" style="display:flex;gap:0.5rem;align-items:center;">
-        <label for="start_date">من:</label>
+    <form method="get" class="search-filter">
+        <label for="start_date" style="white-space: nowrap;">من:</label>
         <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}">
-        <label for="end_date">إلى:</label>
+        <label for="end_date" style="white-space: nowrap;">إلى:</label>
         <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}">
         <button type="submit" class="btn btn-primary">تصفية</button>
         <a href="{% url 'sales_list' %}" class="btn btn-warning">مسح</a>

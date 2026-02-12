@@ -3,9 +3,9 @@
 {% block title %}السيارات - نظام إدارة السيارات{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-between align-center mb-3">
+<div class="d-flex justify-between align-center mb-3" style="flex-wrap: wrap; gap: 1rem;">
     <h1>إدارة السيارات</h1>
-    <div style="display: flex; gap: 1rem;">
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
         <a href="{% url 'add_car' %}" class="btn btn-primary">➕ إضافة سيارة جديدة</a>
         <a href="{% url 'export_cars_pdf' %}?search={{ search_query }}&status={{ status_filter }}&clearance={{ clearance_filter }}" class="btn btn-info" title="تصدير إلى PDF">📄 تصدير PDF</a>
     </div>
@@ -13,7 +13,7 @@
 
 <!-- Search and Filter -->
 <div class="table-container mb-3">
-    <form method="get" class="search-filter" style="display:flex;gap:0.5rem;align-items:center;">
+    <form method="get" class="search-filter">
         <input type="text" name="search" id="searchInput" class="form-control" placeholder="ابحث عن نوع السيارة أو رقم الشاصي..." value="{{ search_query }}">
         <select name="status" id="statusFilter" class="form-control">
             <option value="">جميع الحالات</option>
@@ -40,7 +40,7 @@
             <option value="11" {% if month_filter == '11' %}selected{% endif %}>11 - نوفمبر</option>
             <option value="12" {% if month_filter == '12' %}selected{% endif %}>12 - ديسمبر</option>
         </select>
-        <input type="number" name="year" id="yearFilter" class="form-control" placeholder="YYYY" style="width:90px" value="{{ year_filter }}">
+        <input type="number" name="year" id="yearFilter" class="form-control" placeholder="YYYY" value="{{ year_filter }}">
         <button type="submit" class="btn btn-primary">بحث</button>
         <a href="{% url 'car_list' %}" class="btn btn-warning">مسح</a>
     </form>
